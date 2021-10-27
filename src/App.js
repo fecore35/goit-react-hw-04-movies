@@ -1,4 +1,4 @@
-import { Route, Switch } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import Header from "components/Header";
 import Nav from "components/Nav";
 import HomePage from "views/HomePage";
