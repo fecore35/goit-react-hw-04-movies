@@ -1,28 +1,14 @@
-import { useState, useEffect } from "react";
-import { api } from "../services/api";
+import { useFetchTrendingMoviesForDay } from "../hooks/useFetchTrendingMoviesForDay";
 import MovieList from "components/MovieList";
 
 function HomePage() {
-  const [movie, setMovie] = useState(null);
-
-  const fetchMoviesAsync = async () => {
-    try {
-      const response = await api.fetchTrendingMoviesForDay();
-      setMovie(response.results);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchMoviesAsync();
-  }, []);
+  const fetchTrendingMovies = useFetchTrendingMoviesForDay();
 
   return (
     <section>
       <h2>Home</h2>
 
-      {movie && <MovieList movie={movie} path={`movies`} />}
+      <MovieList movie={fetchTrendingMovies.movies} path={`movies`} />
     </section>
   );
 }
