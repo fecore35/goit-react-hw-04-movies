@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { api } from "../services/api";
+import MovieList from "components/MovieList";
 
 function HomePage() {
   const [movie, setMovie] = useState(null);
@@ -22,17 +22,7 @@ function HomePage() {
     <section>
       <h2>Home</h2>
 
-      {movie && (
-        <ol>
-          {movie.map((item) => {
-            return (
-              <li key={item.id}>
-                <Link to={`movies/${item.id}`}>{item.title}</Link>
-              </li>
-            );
-          })}
-        </ol>
-      )}
+      {movie && <MovieList movies={movie} path={`movies`} />}
     </section>
   );
 }

@@ -1,7 +1,8 @@
 import { useState, useEffect, useMemo } from "react";
-import { Link, useRouteMatch, useHistory, useLocation } from "react-router-dom";
+import { useRouteMatch, useHistory, useLocation } from "react-router-dom";
 import { api } from "../services/api";
 import { useUrlQuery } from "../hooks/useUrlQuery";
+import MovieList from "components/MovieList";
 
 function MoviesPage() {
   const { url } = useRouteMatch();
@@ -73,17 +74,7 @@ function MoviesPage() {
         <button type="submit">Search</button>
       </form>
 
-      {movie && (
-        <ol>
-          {movie.map((item) => {
-            return (
-              <li key={item.id}>
-                <Link to={`${url}/${item.id}`}>{item.title}</Link>
-              </li>
-            );
-          })}
-        </ol>
-      )}
+      {movie && <MovieList movies={movie} path={`${url}`} />}
     </section>
   );
 }
