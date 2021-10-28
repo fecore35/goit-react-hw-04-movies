@@ -74,7 +74,7 @@ function MoviesPage() {
         <button type="submit">Search</button>
       </form>
 
-      {movie && <MovieList movies={movie} path={`${url}`} />}
+      {movie && <MovieList movie={movie} path={`${url}`} />}
     </section>
   );
 }

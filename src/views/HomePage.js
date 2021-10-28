@@ -22,7 +22,7 @@ function HomePage() {
     <section>
       <h2>Home</h2>
 
-      {movie && <MovieList movies={movie} path={`movies`} />}
+      {movie && <MovieList movie={movie} path={`movies`} />}
     </section>
   );
 }
