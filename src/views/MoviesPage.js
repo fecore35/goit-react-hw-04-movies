@@ -1,13 +1,14 @@
 import { useState, useEffect, useMemo } from "react";
-import { Link, useRouteMatch, useHistory } from "react-router-dom";
+import { Link, useRouteMatch, useHistory, useLocation } from "react-router-dom";
 import { api } from "../services/api";
 import { useUrlQuery } from "../hooks/useUrlQuery";
 
 function MoviesPage() {
   const { url } = useRouteMatch();
   const history = useHistory();
+  const location = useLocation();
   const query = useUrlQuery();
-  const params = useMemo(() => query.get("query"), [query]);
+  const locationQuery = useMemo(() => query.get("query"), [query]);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [movie, setMovie] = useState(null);
@@ -25,12 +26,19 @@ function MoviesPage() {
     event.preventDefault();
 
     if (searchQuery.trim() === "") {
-      history.push(`${url}`);
+      history.push({
+        ...location,
+        pathname: `${url}`,
+        search: "",
+      });
       setMovie(null);
       return;
     }
 
-    history.push(`?query=${searchQuery}`);
+    history.push({
+      ...location,
+      search: `query=${searchQuery}`,
+    });
     fetchMoviesAsync(searchQuery, 1);
   };
 
@@ -39,15 +47,15 @@ function MoviesPage() {
   };
 
   useEffect(() => {
-    if (!params) {
+    if (!locationQuery) {
       setSearchQuery("");
       setMovie(null);
       return;
     }
 
-    setSearchQuery(params);
-    fetchMoviesAsync(params, 1);
-  }, [params]);
+    setSearchQuery(locationQuery);
+    fetchMoviesAsync(locationQuery, 1);
+  }, [locationQuery]);
 
   return (
     <section>
