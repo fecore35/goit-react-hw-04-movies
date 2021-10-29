@@ -1,26 +1,15 @@
-import { useState, useEffect } from "react";
-import { api } from "services/api";
+import { STATUS } from "hooks/status";
+import useFetchCast from "hooks/useFetchCast";
 
 function Cast({ movieId }) {
-  const [cast, setCast] = useState(null);
-
-  const fetchCastAsync = async (id) => {
-    try {
-      const response = await api.fetchCredits(id);
-      setCast(response.cast);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchCastAsync(movieId);
-  }, [movieId]);
+  const { cast, status, error } = useFetchCast(movieId);
 
   return (
     <>
       <hr />
-      {cast && (
+      {status === STATUS.ERROR && error}
+      {status === STATUS.LOADING && `Loading...`}
+      {status === STATUS.SUCCESS && (
         <ol>
           {cast.map((item) => {
             return <li key={item.id}>{item.name}</li>;
