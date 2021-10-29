@@ -1,26 +1,15 @@
-import { useState, useEffect } from "react";
-import { api } from "services/api";
+import { STATUS } from "hooks/status";
+import useFetchReviews from "hooks/useFetchReviews";
 
 function Reviews({ movieId }) {
-  const [reviews, setReviews] = useState(null);
-
-  const fetchReviewsAsync = async (id) => {
-    try {
-      const response = await api.fetchReviews(id);
-      setReviews(response.results);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchReviewsAsync(movieId);
-  }, [movieId]);
+  const { reviews, status, error } = useFetchReviews(movieId);
 
   return (
     <>
       <hr />
-      {reviews && (
+      {status === STATUS.ERROR && error}
+      {status === STATUS.LOADING && `Loading...`}
+      {status === STATUS.SUCCESS && (
         <ol>
           {reviews.map((item) => {
             return (
