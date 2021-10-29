@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import {
   Switch,
   Route,
@@ -6,36 +5,24 @@ import {
   useParams,
   useRouteMatch,
 } from "react-router-dom";
-import { api } from "services/api";
+import useFetchMoviesById from "hooks/useFetchMoviesById";
 import BackTo from "components/GoBack";
 import Cast from "components/Cast";
 import Reviews from "components/Reviews";
+import { STATUS } from "hooks/status";
 
 function MovieDetailsPage() {
   const { url } = useRouteMatch();
   const { movieId } = useParams();
-  const [movie, setMovie] = useState(null);
-  const [title, setTitle] = useState(null);
-
-  const fetchMoviesAsync = async (id) => {
-    try {
-      const response = await api.fetchMoviesById(id);
-      setMovie(response);
-      setTitle(response.title);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchMoviesAsync(movieId);
-  }, [movieId]);
+  const { title, status, error } = useFetchMoviesById(movieId);
 
   return (
     <>
       <section>
         <BackTo />
-        {movie && title}
+        {status === STATUS.ERROR && error}
+        {status === STATUS.LOADING && `Loading...`}
+        {status === STATUS.SUCCESS && title}
       </section>
 
       <section>
