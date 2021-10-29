@@ -1,7 +1,10 @@
-import { useState } from "react";
+import { useState, useMemo, useEffect } from "react";
+import { useUrlQuery } from "../../hooks/useUrlQuery";
 
 function SearchForm(props) {
   const [value, setValue] = useState("");
+  const query = useUrlQuery();
+  const locationQuery = useMemo(() => query.get("query"), [query]);
 
   const handlerSearchQuery = (event) => {
     setValue(event.target.value);
@@ -10,13 +13,22 @@ function SearchForm(props) {
   const handlerSubmit = (event) => {
     event.preventDefault();
 
-    if (!value.trim()) {
+    if (!value.trim() || locationQuery === value) {
+      alert("Please enter another request");
       return;
     }
 
     props.submit(value);
-    setValue("");
   };
+
+  useEffect(() => {
+    if (!locationQuery) {
+      setValue("");
+      return;
+    }
+
+    setValue(locationQuery);
+  }, [locationQuery]);
 
   return (
     <form onSubmit={handlerSubmit}>
