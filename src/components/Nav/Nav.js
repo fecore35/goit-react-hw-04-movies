@@ -1,16 +1,18 @@
 import { NavLink } from "react-router-dom";
+import s from "./Nav.module.css";
 
 function Nav() {
+  console.log(s);
   return (
     <nav>
-      <ul className="menu">
-        <li className="item">
-          <NavLink exact to="/" className="link" activeClassName="activeLink">
+      <ul className={s.menu}>
+        <li className={s.item}>
+          <NavLink exact to="/" className={s.link} activeClassName={s.active}>
             Home
           </NavLink>
         </li>
-        <li className="item">
-          <NavLink to="/movies" className="link" activeClassName="activeLink">
+        <li className={s.item}>
+          <NavLink to="/movies" className={s.link} activeClassName={s.active}>
             Movies
           </NavLink>
         </li>
