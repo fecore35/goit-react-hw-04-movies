@@ -29,7 +29,7 @@ function MovieDetailsPage() {
       <section>
         <BackTo to={backTo} label={backText} />
 
-        {status === STATUS.ERROR && error}
+        {status === STATUS.ERROR && <div>{error}</div>}
 
         {status === STATUS.LOADING && (
           <MovieCard
@@ -51,50 +51,51 @@ function MovieDetailsPage() {
           />
         )}
       </section>
+      {status === STATUS.SUCCESS && (
+        <section>
+          <ul>
+            <li>
+              <NavLink
+                to={{
+                  pathname: `${url}/cast`,
+                  state: {
+                    from: backTo,
+                    label: backText,
+                  },
+                }}
+                className="link"
+                activeClassName="activeLink"
+              >
+                Cast
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to={{
+                  pathname: `${url}/reviews`,
+                  state: {
+                    from: backTo,
+                    label: backText,
+                  },
+                }}
+                className="link"
+                activeClassName="activeLink"
+              >
+                Reviews
+              </NavLink>
+            </li>
+          </ul>
 
-      <section>
-        <ul>
-          <li>
-            <NavLink
-              to={{
-                pathname: `${url}/cast`,
-                state: {
-                  from: backTo,
-                  label: backText,
-                },
-              }}
-              className="link"
-              activeClassName="activeLink"
-            >
-              Cast
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to={{
-                pathname: `${url}/reviews`,
-                state: {
-                  from: backTo,
-                  label: backText,
-                },
-              }}
-              className="link"
-              activeClassName="activeLink"
-            >
-              Reviews
-            </NavLink>
-          </li>
-        </ul>
-
-        <Switch>
-          <Route path={`${url}/cast`}>
-            <Cast movieId={movieId} />
-          </Route>
-          <Route path={`${url}/reviews`}>
-            <Reviews movieId={movieId} />
-          </Route>
-        </Switch>
-      </section>
+          <Switch>
+            <Route path={`${url}/cast`}>
+              <Cast movieId={movieId} />
+            </Route>
+            <Route path={`${url}/reviews`}>
+              <Reviews movieId={movieId} />
+            </Route>
+          </Switch>
+        </section>
+      )}
     </>
   );
 }

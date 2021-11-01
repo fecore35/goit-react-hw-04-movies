@@ -21,7 +21,16 @@ export const api = Object.freeze({
   },
 
   async fetchMoviesById(id) {
-    const response = await axios.get(`/movie/${id}`);
+    const response = await axios.get(`/movie/${id}`).catch(function (error) {
+      if (error.response) {
+        return {
+          data: {
+            status: error.response.status,
+            message: error.response.data.status_message,
+          },
+        };
+      }
+    });
     return response.data;
   },
 

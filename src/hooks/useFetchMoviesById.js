@@ -16,16 +16,22 @@ function useFetchMoviesById(id) {
     try {
       setStatus(STATUS.LOADING);
       const response = await api.fetchMoviesById(id);
-      // console.log(response);
+      if (response.status >= 400 && response.status < 600) {
+        setError(response.message);
+        setStatus(STATUS.ERROR);
+        throw new Error("Bad response from server");
+      }
       setTitle(response.title);
       setDate(response.release_date);
-      setPoster(`https://image.tmdb.org/t/p/w500${response.poster_path}`);
+      setPoster(
+        response.poster_path &&
+          `https://image.tmdb.org/t/p/w500${response.poster_path}`
+      );
       setGenres(response.genres);
       setOverview(response.overview);
       setError(null);
       setStatus(STATUS.SUCCESS);
-    } catch (error) {
-      setError(error);
+    } catch (err) {
       setStatus(STATUS.ERROR);
     }
   };
