@@ -16,7 +16,7 @@ function HomePage() {
     <section>
       <h2>TOP 20</h2>
 
-      <MovieList movie={data.results} path={`movies`} />
+      <MovieList movie={data} path={`movies`} />
     </section>
   );
 }
