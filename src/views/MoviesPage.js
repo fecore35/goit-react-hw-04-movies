@@ -2,13 +2,14 @@ import { useRouteMatch } from "react-router-dom";
 import { useFetchMoviesByName } from "../hooks/useFetchMoviesByName";
 import MovieList from "components/MovieList";
 import SearchForm from "components/SearchForm";
+import { STATUS } from "hooks/status";
 
 function MoviesPage() {
   const { url } = useRouteMatch();
-  const search = useFetchMoviesByName();
+  const { movies, status, error, refetch } = useFetchMoviesByName();
 
   const onSubmit = async (value) => {
-    await search.refetch(value);
+    await refetch(value);
   };
 
   return (
@@ -16,7 +17,14 @@ function MoviesPage() {
       <h2>Movies</h2>
 
       <SearchForm submit={onSubmit} />
-      <MovieList movie={search.movies} path={`${url}`} />
+
+      {status === STATUS.ERROR && error}
+
+      {status === STATUS.LOADING && "Loading..."}
+
+      {status === STATUS.SUCCESS && (
+        <MovieList movie={movies} path={`${url}`} />
+      )}
     </section>
   );
 }

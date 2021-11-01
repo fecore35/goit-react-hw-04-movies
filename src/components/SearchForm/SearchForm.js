@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect } from "react";
+import PropTypes from "prop-types";
 import { useUrlQuery } from "../../hooks/useUrlQuery";
 
 function SearchForm(props) {
@@ -44,5 +45,9 @@ function SearchForm(props) {
     </form>
   );
 }
+
+SearchForm.propTypes = {
+  submit: PropTypes.func.isRequired,
+};
 
 export default SearchForm;

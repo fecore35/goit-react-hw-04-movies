@@ -1,5 +1,6 @@
-import { STATUS } from "hooks/status";
+import PropTypes from "prop-types";
 import useFetchReviews from "hooks/useFetchReviews";
+import { STATUS } from "hooks/status";
 
 function Reviews({ movieId }) {
   const { reviews, status, error } = useFetchReviews(movieId);
@@ -24,5 +25,9 @@ function Reviews({ movieId }) {
     </>
   );
 }
+
+Reviews.propTypes = {
+  movieId: PropTypes.string.isRequired,
+};
 
 export default Reviews;

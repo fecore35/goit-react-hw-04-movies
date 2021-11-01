@@ -1,14 +1,21 @@
 import { useFetchTrendingMoviesForDay } from "../hooks/useFetchTrendingMoviesForDay";
 import MovieList from "components/MovieList";
+import { STATUS } from "hooks/status";
 
 function HomePage() {
-  const fetchTrendingMovies = useFetchTrendingMoviesForDay();
+  const { movies, status, error } = useFetchTrendingMoviesForDay();
 
   return (
     <section>
       <h2>Home</h2>
 
-      <MovieList movie={fetchTrendingMovies.movies} path={`movies`} />
+      {status === STATUS.ERROR && error}
+
+      {status === STATUS.LOADING && "Loading..."}
+
+      {status === STATUS.SUCCESS && (
+        <MovieList movie={movies} path={`movies`} />
+      )}
     </section>
   );
 }

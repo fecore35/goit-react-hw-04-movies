@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 function MovieList({ movie, path }) {
@@ -15,5 +16,10 @@ function MovieList({ movie, path }) {
     )
   );
 }
+
+MovieList.propTypes = {
+  movie: PropTypes.array.isRequired,
+  path: PropTypes.string.isRequired,
+};
 
 export default MovieList;

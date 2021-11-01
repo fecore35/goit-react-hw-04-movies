@@ -1,5 +1,6 @@
-import { STATUS } from "hooks/status";
+import PropTypes from "prop-types";
 import useFetchCast from "hooks/useFetchCast";
+import { STATUS } from "hooks/status";
 
 function Cast({ movieId }) {
   const { cast, status, error } = useFetchCast(movieId);
@@ -19,5 +20,9 @@ function Cast({ movieId }) {
     </>
   );
 }
+
+Cast.propTypes = {
+  movieId: PropTypes.string.isRequired,
+};
 
 export default Cast;
