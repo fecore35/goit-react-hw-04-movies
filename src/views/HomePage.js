@@ -1,21 +1,22 @@
-import { useFetchTrendingMoviesForDay } from "../hooks/useFetchTrendingMoviesForDay";
+import { useFetchTrendingMoviesForDay } from "../hooks/react-query/useFetchTrendingMoviesForDay";
 import MovieList from "components/MovieList";
-import { STATUS } from "hooks/status";
 
 function HomePage() {
-  const { movies, status, error } = useFetchTrendingMoviesForDay();
+  const { data, error, isError, isLoading } = useFetchTrendingMoviesForDay();
+
+  if (isLoading) {
+    return <h2>Loading...</h2>;
+  }
+
+  if (isError) {
+    return <h2>Error! {error.message}</h2>;
+  }
 
   return (
     <section>
-      <h2>Home</h2>
+      <h2>TOP 20</h2>
 
-      {status === STATUS.ERROR && error}
-
-      {status === STATUS.LOADING && "Loading..."}
-
-      {status === STATUS.SUCCESS && (
-        <MovieList movie={movies} path={`movies`} />
-      )}
+      <MovieList movie={data.results} path={`movies`} />
     </section>
   );
 }

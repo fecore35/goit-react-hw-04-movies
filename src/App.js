@@ -21,7 +21,7 @@ function App() {
         <Nav />
       </Header>
 
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<h2>Loading...</h2>}>
         <Switch>
           <Route exact path="/">
             <HomePage />

@@ -9,8 +9,8 @@ axios.defaults.headers.common["Content-Type"] =
 
 export const api = Object.freeze({
   async fetchTrendingMoviesForDay() {
-    const response = await axios.get(`/trending/movie/day`);
-    return response.data;
+    const { data } = await axios.get(`/trending/movie/day`);
+    return data;
   },
 
   async fetchMoviesByName(name, page = 1) {
