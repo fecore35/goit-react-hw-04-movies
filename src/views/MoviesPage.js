@@ -23,7 +23,7 @@ function MoviesPage() {
       {status === STATUS.LOADING && "Loading..."}
 
       {status === STATUS.SUCCESS && (
-        <MovieList movie={movies} path={`${url}`} />
+        <MovieList movie={movies} path={`${url}`} backText="Go back movies" />
       )}
     </section>
   );

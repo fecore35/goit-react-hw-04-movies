@@ -4,6 +4,7 @@ import {
   NavLink,
   useParams,
   useRouteMatch,
+  useLocation,
 } from "react-router-dom";
 import useFetchMoviesById from "hooks/useFetchMoviesById";
 import BackTo from "components/GoBack";
@@ -19,10 +20,15 @@ function MovieDetailsPage() {
   const { title, date, poster, genres, overview, status, error } =
     useFetchMoviesById(movieId);
 
+  const location = useLocation();
+  const backTo = location?.state?.from ?? { pathname: "/" };
+  const backText = location?.state?.label ?? "Go home";
+
   return (
     <>
       <section>
-        <BackTo />
+        <BackTo to={backTo} label={backText} />
+
         {status === STATUS.ERROR && error}
 
         {status === STATUS.LOADING && (
@@ -50,7 +56,13 @@ function MovieDetailsPage() {
         <ul>
           <li>
             <NavLink
-              to={`${url}/cast`}
+              to={{
+                pathname: `${url}/cast`,
+                state: {
+                  from: backTo,
+                  label: backText,
+                },
+              }}
               className="link"
               activeClassName="activeLink"
             >
@@ -59,7 +71,13 @@ function MovieDetailsPage() {
           </li>
           <li>
             <NavLink
-              to={`${url}/reviews`}
+              to={{
+                pathname: `${url}/reviews`,
+                state: {
+                  from: backTo,
+                  label: backText,
+                },
+              }}
               className="link"
               activeClassName="activeLink"
             >
