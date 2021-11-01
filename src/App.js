@@ -1,9 +1,18 @@
+import { lazy, Suspense } from "react";
 import { Switch, Route } from "react-router-dom";
 import Header from "components/Header";
 import Nav from "components/Nav";
-import HomePage from "views/HomePage";
-import MoviesPage from "views/MoviesPage";
-import MovieDetailsPage from "views/MovieDetailsPage";
+
+const HomePage = lazy(() =>
+  import("views/HomePage" /* webpackChunkName: "home-view" */)
+);
+const MoviesPage = lazy(() =>
+  import("views/MoviesPage" /* webpackChunkName: "movies-view" */)
+);
+
+const MovieDetailsPage = lazy(() =>
+  import("views/MovieDetailsPage" /* webpackChunkName: "movie-page-view" */)
+);
 
 function App() {
   return (
@@ -12,19 +21,21 @@ function App() {
         <Nav />
       </Header>
 
-      <Switch>
-        <Route exact path="/">
-          <HomePage />
-        </Route>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Switch>
+          <Route exact path="/">
+            <HomePage />
+          </Route>
 
-        <Route exact path="/movies">
-          <MoviesPage />
-        </Route>
+          <Route exact path="/movies">
+            <MoviesPage />
+          </Route>
 
-        <Route path="/movies/:movieId">
-          <MovieDetailsPage />
-        </Route>
-      </Switch>
+          <Route path="/movies/:movieId">
+            <MovieDetailsPage />
+          </Route>
+        </Switch>
+      </Suspense>
     </div>
   );
 }
