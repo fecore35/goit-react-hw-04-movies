@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import s from "./MovieCard.module.css";
+import noPoster from "../../images/poster-404.png";
 
 function MovieCard({ title, date, poster, genres, overview }) {
   const arrayDate = date.split("-");
@@ -8,7 +9,7 @@ function MovieCard({ title, date, poster, genres, overview }) {
   return (
     <div className={s.row}>
       <div className={s.row__image}>
-        <img className={s.image} src={poster} alt={title} />
+        <img className={s.image} src={poster ?? noPoster} alt={title} />
       </div>
 
       <div className={s.row__content}>
@@ -29,7 +30,7 @@ function MovieCard({ title, date, poster, genres, overview }) {
 MovieCard.propTypes = {
   title: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
-  poster: PropTypes.string.isRequired,
+  poster: PropTypes.string,
   genres: PropTypes.array,
   overview: PropTypes.string,
 };
