@@ -1,0 +1,17 @@
+.row {
+  display: flex;
+}
+
+.row__image {
+  width: 25%;
+}
+
+.row__content {
+  padding-left: 50px;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+}

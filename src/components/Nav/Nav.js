@@ -2,7 +2,6 @@ import { NavLink } from "react-router-dom";
 import s from "./Nav.module.css";
 
 function Nav() {
-  console.log(s);
   return (
     <nav>
       <ul className={s.menu}>
